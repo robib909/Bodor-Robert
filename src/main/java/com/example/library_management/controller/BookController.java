@@ -27,7 +27,7 @@ public class BookController {
 
     @PostMapping
     public Book createBook(@RequestBody Book book) {
-        return bookService.saveBook(book);  // Save the book
+        return bookService.saveBook(book);  // Ensure author is part of the book object
     }
 
     @DeleteMapping("/{id}")

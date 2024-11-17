@@ -1,7 +1,9 @@
 package com.example.library_management.service;
 
+import com.example.library_management.Author;
 import com.example.library_management.Book;
 import com.example.library_management.repository.BookRepository;
+import com.example.library_management.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,9 @@ public class BookService {
 
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private AuthorRepository authorRepository;  // Inject AuthorRepository
 
     // Get all books
     public List<Book> getAllBooks() {
@@ -25,9 +30,15 @@ public class BookService {
 
     // Save or update a book
     public Book saveBook(Book book) {
-        if (book.getAuthor() == null) {
+        if (book.getAuthor() == null || book.getAuthor().getId() == null) {
             throw new IllegalArgumentException("Author must be provided");
         }
+        
+        // Use the injected AuthorRepository to find the author by ID
+        Author author = authorRepository.findById(book.getAuthor().getId())
+                .orElseThrow(() -> new IllegalArgumentException("Author not found"));
+        
+        book.setAuthor(author);
         return bookRepository.save(book);
     }
 
