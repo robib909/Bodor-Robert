@@ -1,13 +1,18 @@
 package com.example.library_management;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
+
 public class Author {
 
     @Id
@@ -16,9 +21,12 @@ public class Author {
 
     private String name;  // Author's name
     private String biography;  // Short biography of the author
-
-    @OneToMany(mappedBy = "author")  // One author can have multiple books
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Book> books;
+
+    
    
   
 

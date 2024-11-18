@@ -1,5 +1,7 @@
 package com.example.library_management;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -17,6 +19,7 @@ public class Book {
     private String title;
     private String genre;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
     private Author author;
 
