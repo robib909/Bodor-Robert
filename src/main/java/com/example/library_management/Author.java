@@ -20,7 +20,7 @@ public class Author {
     private Long id;
 
     private String name;  // Author's name
-    private String biography;  // Short biography of the author
+    
     
     @JsonIgnore
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -49,13 +49,7 @@ public class Author {
         this.name = name;
     }
 
-    public String getBiography() {
-        return biography;
-    }
-
-    public void setBiography(String biography) {
-        this.biography = biography;
-    }
+   
 
     public List<Book> getBooks() {
         return books;

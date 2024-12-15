@@ -28,7 +28,7 @@ public class BookService {
         return bookRepository.findById(id).orElse(null);
     }
 
-    // Save or update a book
+    // Save a new book or create a book
     public Book saveBook(Book book) {
         if (book.getAuthor() == null || book.getAuthor().getId() == null) {
             throw new IllegalArgumentException("Author must be provided");
@@ -40,6 +40,28 @@ public class BookService {
         
         book.setAuthor(author);
         return bookRepository.save(book);
+    }
+
+    // Update an existing book
+    public Book updateBook(Long id, Book book) {
+        // Find the existing book
+        Book existingBook = bookRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Book not found"));
+
+        // Ensure that the author exists
+        if (book.getAuthor() == null || book.getAuthor().getId() == null) {
+            throw new IllegalArgumentException("Author must be provided");
+        }
+        
+        Author author = authorRepository.findById(book.getAuthor().getId())
+                .orElseThrow(() -> new IllegalArgumentException("Author not found"));
+        
+        // Update the book fields
+        existingBook.setTitle(book.getTitle());
+        existingBook.setGenre(book.getGenre());
+        existingBook.setAuthor(author);  // Update the author
+        
+        // Save and return the updated book
+        return bookRepository.save(existingBook);
     }
 
     // Delete a book by ID

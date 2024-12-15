@@ -1,6 +1,6 @@
 package com.example.library_management;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -19,8 +19,8 @@ public class Book {
     private String title;
     private String genre;
 
-    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("books") // Ignore 'books' field in Author to prevent recursion
     private Author author;
 
     // Constructors, Getters and Setters

@@ -2,7 +2,6 @@ package com.example.library_management.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import com.example.library_management.Book;
 import com.example.library_management.service.BookService;
 
@@ -27,11 +26,16 @@ public class BookController {
 
     @PostMapping
     public Book createBook(@RequestBody Book book) {
-        return bookService.saveBook(book);  // Ensure author is part of the book object
+        return bookService.saveBook(book);  // Create a new book
+    }
+
+    @PutMapping("/{id}")
+    public Book updateBook(@PathVariable Long id, @RequestBody Book book) {
+        return bookService.updateBook(id, book);  // Update the book
     }
 
     @DeleteMapping("/{id}")
     public void deleteBook(@PathVariable Long id) {
-        bookService.deleteBook(id);
+        bookService.deleteBook(id);  // Delete a book by ID
     }
 }
